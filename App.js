@@ -1,5 +1,5 @@
-import { StatusBar } from "expo-status-bar";
-import { Platform, StyleSheet, Text, View } from "react-native";
+import { useState } from "react";
+import { Keyboard, Platform, StyleSheet, Text, View } from "react-native";
 import {
   KeyboardAvoidingView,
   TextInput,
@@ -8,15 +8,32 @@ import {
 import Task from "./components/Task";
 
 export default function App() {
+  const [task, setTask] = useState("");
+  const [taskItems, setTaskItems] = useState([]);
+
+  const handleAddTask = () => {
+    Keyboard.dismiss();
+    setTaskItems([...taskItems, task]);
+    setTask("");
+  };
+
+  const completeTask = (index) => {
+    let itemsCopy = [...taskItems];
+    itemsCopy.splice(index, 1);
+    setTaskItems(itemsCopy);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.taskWrapper}>
         {/* Today's tasks */}
         <Text style={styles.sectionTitle}>Today's tasks</Text>
         <View style={styles.items}>
-          <Task text={"Task 1"} />
-          <Task text={"Task 2"} />
-          <Task text={"Task 3"} />
+          {taskItems.map((item, index) => (
+            <TouchableOpacity key={index} onPress={() => completeTask(index)}>
+              <Task text={item} />
+            </TouchableOpacity>
+          ))}
         </View>
       </View>
 
@@ -25,9 +42,14 @@ export default function App() {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.writeTaskWrapper}
       >
-        <TextInput style={styles.input} placeholder={"Write a Task"} />
+        <TextInput
+          style={styles.input}
+          placeholder={"Write a Task"}
+          value={task}
+          onChange={(e) => setTask(e.target.value)}
+        />
 
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => handleAddTask()}>
           <View style={styles.addWrapper}>
             <Text style={styles.addtext}>+</Text>
           </View>
@@ -64,9 +86,9 @@ const styles = StyleSheet.create({
   input: {
     paddingVertical: 15,
     paddingHorizontal: 15,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 60,
-    borderColor: '#c0c0c0',
+    borderColor: "#c0c0c0",
     borderWidth: 1,
     width: 250,
   },
@@ -77,7 +99,7 @@ const styles = StyleSheet.create({
     borderRadius: 60,
     justifyContent: "center",
     alignItems: "center",
-    borderColor: '#c0c0c0',
+    borderColor: "#c0c0c0",
     borderWidth: 1,
   },
   addtext: {},
