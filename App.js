@@ -1,14 +1,18 @@
 import { useState } from "react";
-import { Keyboard, Platform, StyleSheet, Text, View } from "react-native";
 import {
+  Keyboard,
+  Platform,
+  StyleSheet,
+  Text,
+  View,
   KeyboardAvoidingView,
   TextInput,
   TouchableOpacity,
-} from "react-native-web";
+} from "react-native";
 import Task from "./components/Task";
 
 export default function App() {
-  const [task, setTask] = useState("");
+  const [task, setTask] = useState("salam");
   const [taskItems, setTaskItems] = useState([]);
 
   const handleAddTask = () => {
@@ -22,6 +26,11 @@ export default function App() {
     itemsCopy.splice(index, 1);
     setTaskItems(itemsCopy);
   };
+
+  const handleInput = (event) => {
+    console.log('********************')
+    console.log(event.target.name);
+  }
 
   return (
     <View style={styles.container}>
@@ -45,8 +54,9 @@ export default function App() {
         <TextInput
           style={styles.input}
           placeholder={"Write a Task"}
+          name="task input"
           value={task}
-          onChange={(e) => setTask(e.target.value)}
+          onChange={handleInput}
         />
 
         <TouchableOpacity onPress={() => handleAddTask()}>
