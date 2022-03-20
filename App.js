@@ -12,12 +12,17 @@ import {
 import Task from "./components/Task";
 
 export default function App() {
-  const [task, setTask] = useState("salam");
+  const [task, setTask] = useState("");
   const [taskItems, setTaskItems] = useState([]);
 
   const handleAddTask = () => {
     Keyboard.dismiss();
     setTaskItems([...taskItems, task]);
+    setTask("");
+  };
+
+  const handleResetTask = () => {
+    setTaskItems([]);
     setTask("");
   };
 
@@ -28,14 +33,14 @@ export default function App() {
   };
 
   const handleInput = (event) => {
-    console.log('********************')
+    console.log("********************");
     console.log(event.target.name);
-  }
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.taskWrapper}>
-        {/* Today's tasks */}
+        {/* Main content */}
         <Text style={styles.sectionTitle}>Today's tasks</Text>
         <View style={styles.items}>
           {taskItems.map((item, index) => (
@@ -62,6 +67,18 @@ export default function App() {
         <TouchableOpacity onPress={() => handleAddTask()}>
           <View style={styles.addWrapper}>
             <Text style={styles.addtext}>+</Text>
+          </View>
+        </TouchableOpacity>
+      </KeyboardAvoidingView>
+
+      {/* Delete state button */}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.DeleteStateWrapper}
+      >
+        <TouchableOpacity onPress={() => handleResetTask()}>
+          <View style={styles.resetWrapper}>
+            <Text>Reset Tasks</Text>
           </View>
         </TouchableOpacity>
       </KeyboardAvoidingView>
@@ -113,4 +130,21 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   addtext: {},
+  DeleteStateWrapper: {
+    position: "absolute",
+    bottom: 20,
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  resetWrapper: {
+    width: 340,
+    backgroundColor: "#007bff",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 6,
+    borderRadius: 12,
+  }
 });

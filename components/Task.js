@@ -1,6 +1,4 @@
-import react from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { TouchableOpacity } from "react-native-web";
 
 const Task = (props) => {
   return (
