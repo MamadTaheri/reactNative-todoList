@@ -32,11 +32,6 @@ export default function App() {
     setTaskItems(itemsCopy);
   };
 
-  const handleInput = (event) => {
-    console.log("********************");
-    console.log(event.target.name);
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.taskWrapper}>
@@ -59,11 +54,9 @@ export default function App() {
         <TextInput
           style={styles.input}
           placeholder={"Write a Task"}
-          name="task input"
           value={task}
-          onChange={handleInput}
+          onChangeText={text => setTask(text)}
         />
-
         <TouchableOpacity onPress={() => handleAddTask()}>
           <View style={styles.addWrapper}>
             <Text style={styles.addtext}>+</Text>
@@ -115,14 +108,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     backgroundColor: "#fff",
     borderRadius: 60,
-    borderColor: "#c0c0c0",
+    borderColor: "#007bff",
     borderWidth: 1,
     width: 250,
   },
   addWrapper: {
     width: 60,
     height: 60,
-    backgroundColor: "#fff",
+    backgroundColor: "#007bff",
     borderRadius: 60,
     justifyContent: "center",
     alignItems: "center",
@@ -140,7 +133,7 @@ const styles = StyleSheet.create({
   },
   resetWrapper: {
     width: 340,
-    backgroundColor: "#007bff",
+    backgroundColor: "red",
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
