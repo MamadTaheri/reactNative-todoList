@@ -1,6 +1,6 @@
 # React Native Essentials
 
-## Beginning
+## 01- Beginning
 
 Install expo :
 
@@ -15,12 +15,12 @@ Start developement server :
     expo start
 
 
-## Building application Old-Fashion way
+## 02- Building application Old-Fashion way
 
 
     expo build:android -t apk
 
-## Building application Recent way
+## 03- Building application Recent way
 
 First time: install eas-cli using
 
@@ -30,11 +30,37 @@ Then, every time we need build, we can use:
 
     eas build -p android
 
+## 04- Building APKs for Android emulators and devices : [Link](https://docs.expo.dev/build-reference/apk/)
+
+first, change  `eas.json` file like this:
+
+    {
+    "build": {
+        "preview": {
+        "android": {
+            "buildType": "apk"
+        }
+        },
+        "preview2": {
+        "android": {
+            "gradleCommand": ":app:assembleRelease"
+        }
+        },
+        "preview3": {
+        "developmentClient": true
+        },
+        "production": {}
+    }
+    }
+
+then, use this command:
+    
+    eas build -p android --profile preview
 
 
-# Clearing bundler caches on Windows based on [expo website](https://docs.expo.dev/troubleshooting/clear-cache-windows)
+## 05- Clearing bundler caches on Windows based on [expo website](https://docs.expo.dev/troubleshooting/clear-cache-windows)
 
-## Expo CLI and npm
+### Expo CLI and npm
     del node_modules
     npm cache clean --force
     npm install
